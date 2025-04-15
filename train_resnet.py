@@ -33,7 +33,7 @@ testset = datasets.CIFAR10(root='./data', train=False, download=True, transform=
 testloader = DataLoader(testset, batch_size=batch_size, shuffle=False)
 
 # Charger le modèle ResNet18 pré-entraîné
-model = models.resnet18(weights=models.ResNet18_Weights.DEFAULT)
+model = models.resnet18(weights=None)
 
 # Adapter la première couche (évite une perte excessive de l'information)
 model.conv1 = nn.Conv2d(3, 64, kernel_size=3, stride=1, padding=1, bias=False)
