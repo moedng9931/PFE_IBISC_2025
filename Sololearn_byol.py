@@ -11,7 +11,7 @@ import copy
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 batch_size = 64
 learning_rate = 0.001
-pretrain_epochs = 100
+pretrain_epochs = 30
 finetune_epochs = 30
 ema_m = 0.99
 
