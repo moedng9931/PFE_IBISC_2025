@@ -80,7 +80,13 @@ transform = get_simclr_augmentation()
 dataset = datasets.CIFAR10(root='./data', train=True, download=True)
 pretrain_loader = DataLoader(BYOLDataset(dataset, transform), batch_size=batch_size, shuffle=True)
 
-backbone = models.resnet18(weights=None)
+
+
+backbone = models.resnet18(weights=ResNet18_Weights.IMAGENET1K_V1)
+backbone.conv1 = nn.Conv2d(3, 64, kernel_size=3, stride=1, padding=1, bias=False)
+backbone.maxpool = nn.Identity()  # important pour CIFAR-10
+backbone.fc = nn.Identity()
+
 backbone.conv1 = nn.Conv2d(3, 64, kernel_size=3, stride=1, padding=1, bias=False)
 backbone.fc = nn.Identity()
 
