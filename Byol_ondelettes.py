@@ -8,7 +8,7 @@ import pywt, copy
 # === PARAMÈTRES ===
 wavelet_type = "coif1"  # 🔁 Change "haar", "db4", "db8", etc.
 batch_size, lr = 128, 1e-3
-pretrain_epochs, finetune_epochs = 10, 10
+pretrain_epochs, finetune_epochs = 100, 50
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # === ONDELETTE ===
