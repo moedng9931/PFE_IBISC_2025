@@ -9,8 +9,8 @@ import copy
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 batch_size = 128
 lr = 1e-3
-pretrain_epochs = 20
-finetune_epochs = 20
+pretrain_epochs = 100
+finetune_epochs = 50
 
 # --- BYOL AUGMENTATION ---
 byol_transform = transforms.Compose([
