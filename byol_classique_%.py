@@ -104,8 +104,10 @@ for epoch in range(pretrain_epochs):
 
 # --- LINEAR TRANSFORM (for probing/fine-tuning) ---
 linear_transform = transforms.Compose([
+    transforms.RandomCrop(32, padding=4),
+    transforms.RandomHorizontalFlip(),
     transforms.ToTensor(),
-    transforms.Normalize((0.5,), (0.5,))
+    transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))  # 3 canaux pour CIFAR-10
 ])
 
 # --- DATASET REDUCTION FOR SUPERVISED STAGE ---
