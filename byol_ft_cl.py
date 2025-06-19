@@ -105,7 +105,7 @@ for epoch in range(pretrain_epochs):
     print(f"[Epoch {epoch+1}] BYOL Loss: {total_loss/len(byol_loader):.4f}")
 
 # --- WAVELET CURRICULUM FUNCTIONS ---
-def apply_wavelet_LL(image_tensor, level, wavelet='db4'):
+def apply_wavelet_LL(image_tensor, level, wavelet='sym4'):
     img = image_tensor.numpy().transpose(1, 2, 0)  # [C,H,W] → [H,W,C]
     coeffs = pywt.wavedec2(img, wavelet=wavelet, level=level, axes=(0, 1))
     LL = coeffs[0]
@@ -113,7 +113,7 @@ def apply_wavelet_LL(image_tensor, level, wavelet='db4'):
     return transforms.functional.resize(LL_resized, size=(32, 32))
 
 class WaveletCurriculumDataset(Dataset):
-    def __init__(self, base_dataset, wavelet='sym6', transform=None, max_epoch=50):
+    def __init__(self, base_dataset, wavelet='sym4', transform=None, max_epoch=50):
         self.base_dataset = base_dataset
         self.wavelet = wavelet
         self.transform = transform
@@ -161,7 +161,7 @@ def get_subset_per_class(dataset, fraction):
 
 trainset = datasets.CIFAR10(root='./data', train=True, transform=transforms.ToTensor())
 subset_train = get_subset_per_class(trainset, label_fraction)
-curriculum_dataset = WaveletCurriculumDataset(subset_train, wavelet='sym6', transform=linear_transform, max_epoch=finetune_epochs)
+curriculum_dataset = WaveletCurriculumDataset(subset_train, wavelet='sym4', transform=linear_transform, max_epoch=finetune_epochs)
 trainloader = DataLoader(curriculum_dataset, batch_size=batch_size, shuffle=True)
 
 testset = datasets.CIFAR10(root='./data', train=False, transform=transforms.Compose([
